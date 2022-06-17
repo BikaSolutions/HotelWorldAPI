@@ -43,6 +43,11 @@ public class HotelsController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
+    @GetMapping("/hotels/{hotelId}")
+    public HotelResource getHotelById(@PathVariable Long hotelId){
+        return convertToResource(hotelService.getHotelById(hotelId));
+    }
+
     @PostMapping("/hotels")
     public HotelResource createHotel(@Valid @RequestBody SaveHotelResource resource){
         Hotel hotel = convertToEntity(resource);

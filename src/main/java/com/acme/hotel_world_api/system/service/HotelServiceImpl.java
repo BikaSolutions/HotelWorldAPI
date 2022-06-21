@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.acme.hotel_world_api.sales.domain.model.Product;
+import com.acme.hotel_world_api.sales.domain.repository.ProductRepository;
 import com.acme.hotel_world_api.shared.exception.ResourceNotFoundException;
 import com.acme.hotel_world_api.system.domain.model.Hotel;
 import com.acme.hotel_world_api.system.domain.repository.HotelRepository;
@@ -16,6 +18,9 @@ public class HotelServiceImpl implements HotelService {
 
     @Autowired
     private HotelRepository hotelRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     public Page<Hotel> getAllHotel(Pageable pageable) {
@@ -48,6 +53,20 @@ public class HotelServiceImpl implements HotelService {
         hotelRepository.delete(hotel);
         
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public Hotel assingHotelProduct(Long hotelId, Long productId) {
+        Product product=productRepository.findById(productId).orElseThrow(()-> new ResourceNotFoundException("Product", "ID", productId));
+
+        return hotelRepository.findById(hotelId).map(hotel -> hotelRepository.save(hotel.addProduct(product))).orElseThrow(()-> new ResourceNotFoundException("Hotel", "ID", hotelId));
+    }
+
+    @Override
+    public Hotel unassingHotelProduct(Long hotelId, Long productId) {
+        Product product=productRepository.findById(productId).orElseThrow(()-> new ResourceNotFoundException("Product", "ID", productId));
+
+        return hotelRepository.findById(hotelId).map(hotel -> hotelRepository.save(hotel.deleteProduct(product))).orElseThrow(()-> new ResourceNotFoundException("Hotel", "ID", hotelId));
     }
     
 }

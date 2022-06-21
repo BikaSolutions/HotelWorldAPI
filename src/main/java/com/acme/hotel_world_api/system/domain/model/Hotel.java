@@ -1,7 +1,11 @@
 package com.acme.hotel_world_api.system.domain.model;
 
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import com.acme.hotel_world_api.sales.domain.model.Product;
 
 @Entity
 @Table(name = "hotels")
@@ -22,7 +26,11 @@ public class Hotel {
     @NotNull
     private Long phone;
     //relation
-
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "hotel_products", 
+    joinColumns = {@JoinColumn(name = "hotel_id")}, 
+    inverseJoinColumns = {@JoinColumn(name = "product_id")})
+    private List<Product> products;
     //getters and setters
 
     public Long getId(){
@@ -58,6 +66,30 @@ public class Hotel {
 
     public Hotel setPhone(Long phone){
         this.phone = phone;
+        return this;
+    }
+
+    public List<Product> getProducts(){
+        return products;
+    }
+
+    //bussiness logic
+
+    public boolean containProduct(Product product){
+        return this.getProducts().contains(product);
+    }
+
+    public Hotel addProduct(Product product){
+        if(!containProduct(product)){
+            this.getProducts().add(product);
+        }
+        return this;
+    }
+
+    public Hotel deleteProduct(Product product){
+        if(containProduct(product)){
+            this.getProducts().remove(product);
+        }
         return this;
     }
 }

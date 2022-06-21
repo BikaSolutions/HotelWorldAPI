@@ -12,4 +12,7 @@ public interface HotelService {
     Hotel createHotel(Hotel hotel);
     Hotel updateHotel(Long hotelId, Hotel hotelRequest);
     ResponseEntity<?> deleteHotel(Long hotelId);
+
+    Hotel assingHotelProduct(Long hotelId, Long productId);
+    Hotel unassingHotelProduct(Long hotelId, Long productId);
 }

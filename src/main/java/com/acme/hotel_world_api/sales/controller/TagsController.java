@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,11 +52,6 @@ public class TagsController{
         return convertToResource(tagService.createTag(convertToEntity(resource)));
     }
 
-    @PutMapping("/tags/{tagId}")
-    public TagResource updateTag(@PathVariable Long tagId, @Valid @RequestBody SaveTagResource resource){
-        return convertToResource(tagService.updateTag(tagId,convertToEntity(resource)));
-    }
-    
     @GetMapping("/products/{productId}/tags")
     public Page<TagResource> getAllTagsByProductId(@PathVariable Long productId, Pageable pageable){
         List<TagResource> tags=tagService.getAllTagsByProductId(productId, pageable).getContent().stream().map(this::convertToResource).collect(Collectors.toList());

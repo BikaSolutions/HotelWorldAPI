@@ -59,7 +59,7 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public Sale addProduct(Long saleId, Long productId) {
-        Product product = productRepository.findById(saleId).orElseThrow(() -> new ResourceNotFoundException(
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException(
             "Product", "Id", productId
         ));
 

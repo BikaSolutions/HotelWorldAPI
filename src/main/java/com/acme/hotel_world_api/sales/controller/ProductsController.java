@@ -49,6 +49,12 @@ public class ProductsController {
         int productsCount=products.size();
         return new PageImpl<>(products, pageable,productsCount);
     }
+    @GetMapping("/sales/{saleId}/products")
+    public Page<ProductResource> getAllProductsBySaleId(@PathVariable Long saleId, Pageable pageable){
+        List<ProductResource> products= productService.getAllProductsBySaleId(saleId, pageable).getContent().stream().map(this::convertToResource).collect(Collectors.toList());
+        int productsCount = products.size();
+        return new PageImpl<>(products, pageable, productsCount);
+    }
 
     @GetMapping("/products/{productId}")
     public ProductResource getProductById(@PathVariable Long productId){

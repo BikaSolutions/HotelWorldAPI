@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.acme.hotel_world_api.sales.domain.model.Product;
 import com.acme.hotel_world_api.sales.domain.model.Tag;
 import com.acme.hotel_world_api.sales.domain.repository.ProductRepository;
+import com.acme.hotel_world_api.sales.domain.repository.SaleRepository;
 import com.acme.hotel_world_api.sales.domain.repository.TagRepository;
 import com.acme.hotel_world_api.sales.domain.service.ProductService;
 import com.acme.hotel_world_api.shared.exception.ResourceNotFoundException;
@@ -19,6 +20,8 @@ import com.acme.hotel_world_api.system.domain.repository.HotelRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+    @Autowired
+    private SaleRepository saleRepository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -94,6 +97,15 @@ public class ProductServiceImpl implements ProductService {
             int productsCount=products.size();
             return new PageImpl<>(products, pageable, productsCount);
         }).orElseThrow(()-> new ResourceNotFoundException("Tag", "ID", tagId));
+    }
+
+    @Override
+    public Page<Product> getAllProductsBySaleId(Long saleId, Pageable pageable) {
+        return saleRepository.findById(saleId).map(sale ->{
+            List<Product> products = sale.getProducts();
+            int productCount= products.size();
+            return new PageImpl<>(products, pageable, productCount);
+        }).orElseThrow(()-> new ResourceNotFoundException("Sale", "ID", saleId));
     }
     
 }

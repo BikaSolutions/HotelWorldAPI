@@ -47,7 +47,7 @@ public class EmployeesController {
     }
 
     @GetMapping("/hotels/{hotelId}/employees/{employeeId}")
-    public EmployeeResource getCommentByIdAndPostId(@PathVariable Long hotelId, @PathVariable Long employeeId){
+    public EmployeeResource getEmployeeByIdAndHotelId(@PathVariable Long hotelId, @PathVariable Long employeeId){
         return convertToResource(employeeService.getEmployeeByIdAndHotelId(hotelId, employeeId));
     }
 

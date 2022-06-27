@@ -46,7 +46,7 @@ public class RoomsController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @GetMapping("/hotels/{hotelId}/rooms/{roomId}")
+    @GetMapping("/hotels/{hotelId}/rooms/{roomId} test")
     public RoomResource getRoomByIdAndHotelId(@PathVariable Long hotelId, @PathVariable Long roomId){
         return convertToResource(roomService.getRoomByIdAndHotelId(hotelId, roomId));
     }

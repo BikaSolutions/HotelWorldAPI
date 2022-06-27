@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.acme.hotel_world_api.shared.exception.ResourceNotFoundException;
+import com.acme.hotel_world_api.system.domain.repository.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,7 +31,10 @@ import com.acme.hotel_world_api.system.resource.SaveEmployeeResource;
 @RestController
 @RequestMapping("/api")
 public class EmployeesController {
-    
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     @Autowired
     private EmployeeService employeeService;
 

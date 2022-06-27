@@ -6,7 +6,10 @@ import org.springframework.http.ResponseEntity;
 
 import com.acme.hotel_world_api.system.domain.model.Employee;
 
+import java.util.Optional;
+
 public interface EmployeeService {
+
     Page<Employee> getAllEmployeeByHotelId(Long hotelId, Pageable pageable);
     Employee getEmployeeByIdAndHotelId(Long hotelId, Long employeeId);
     Employee createEmployee(Long hotelId, Employee employee);

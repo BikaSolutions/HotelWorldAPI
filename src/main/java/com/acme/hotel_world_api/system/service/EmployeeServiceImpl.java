@@ -12,6 +12,8 @@ import com.acme.hotel_world_api.system.domain.repository.EmployeeRepository;
 import com.acme.hotel_world_api.system.domain.repository.HotelRepository;
 import com.acme.hotel_world_api.system.domain.service.EmployeeService;
 
+import java.util.Optional;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -20,6 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private HotelRepository hotelRepository;
+
 
     @Override
     public Page<Employee> getAllEmployeeByHotelId(Long hotelId, Pageable pageable) {
